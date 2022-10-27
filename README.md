@@ -1,6 +1,6 @@
 # Temp repository for solving problem 
 
-I want to parse districts from this site - https://115.xn--90ais/ -> (Tab "Статистика") but got stuck.
+I want to parse districts from all provinces from this site - https://115.xn--90ais/ -> (Tab "Статистика") but got stuck.
 
 ![image](https://user-images.githubusercontent.com/107945681/198397591-1d23f72f-8847-4678-bdde-e341ab153d57.png)
 
