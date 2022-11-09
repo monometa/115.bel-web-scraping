@@ -386,7 +386,7 @@ def main():
 
                 del list_with_main_info[request]["application_card_link"]
 
-                sleep(1)
+                # sleep(1)
 
             # final version of request list
             list_of_requests = list_with_main_info
