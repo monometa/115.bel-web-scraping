@@ -79,7 +79,7 @@ def get_regions_txt_f(province='', district=''):
 
         with open(path / filename, "w+", encoding="utf8") as f:
             json.dump(text_d, f, ensure_ascii=False)
-    
+
     return filename
 
 def transform_txt_f_2_html(filename):
@@ -96,7 +96,7 @@ def transform_txt_f_2_html(filename):
 
     with open (path / html_filename, 'w') as f:
         f.writelines(flow_string)
-    
+
     return html_filename
 
 def extract_regions_from_html_save_2_csv(html_filename):
