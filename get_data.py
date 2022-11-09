@@ -8,6 +8,7 @@ from tqdm import tqdm
 import requests
 from parser_config import *
 from parser import Parser
+
 requests.packages.urllib3.disable_warnings()
 requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ":HIGH:!DH:!aNULL"
 try:
@@ -16,13 +17,6 @@ try:
     )
 except AttributeError:
     pass
-
-
-
-
-
-
-
 
 
 def set_payload_map_dynamic(payload, period, subject):
@@ -36,7 +30,7 @@ def set_payload_map_dynamic(payload, period, subject):
     return payload
 
 
-def generate_template_date(year: int, month: str, day: int):
+def generate_template_date(year: int, month: int, day: int):
     """
     Generates date in Russian Language
     """
@@ -45,9 +39,7 @@ def generate_template_date(year: int, month: str, day: int):
 
     # change day of week from number to ru_name
     day_number = re.search("(.*?),", date_string).group(1)
-    date_string = date_string.replace(
-        day_number, week_days[day_number], 1
-    )
+    date_string = date_string.replace(day_number, week_days[day_number], 1)
 
     # change month name from eng to ru
     for key in months_translate.keys():
@@ -142,9 +134,9 @@ def get_params_list_from_infotext(info_string):
     except AttributeError:
         district = None
     try:
-        malfunction_type = re.search("Вид неисправности: </b>(.*?)<br>", info_string).group(
-        1
-    )
+        malfunction_type = re.search(
+            "Вид неисправности: </b>(.*?)<br>", info_string
+        ).group(1)
     except AttributeError:
         malfunction_type = None
     try:
@@ -183,11 +175,9 @@ def get_raw_requests(url, headers, payload):
         s.headers.update(headers)
 
         r = s.post(url=url, data=payload)
-        try:
-            list_of_raw_requests = r.json()
-        except ValueError:
-            print("ERROR")
-            print(r.text)
+        list_of_raw_requests = r.json()
+        if 'Your session has expired' in  list_of_raw_requests.values():
+            raise Exception('Your session has expired. You need to update your session params')
 
     return list_of_raw_requests
 
@@ -207,20 +197,23 @@ def get_extra_info_content(url, cookie, referer):
 
 def main():
 
+    parser_session = Parser()
+
+    cookie = parser_session.cookie()
+    referer = parser_session.referer()
+
+    url = "https://115.xn--90ais/portal/wwv_flow.ajax"
+
     headers = Parser.get_headers_map(cookie=cookie, referer=referer)
     payload = Parser.get_payload_map_static(
         # you can remove params but also you can send yours,
         # this function has default params
-
         # p_instance=p_instance,
         # p_request=p_request,
         # x02=x02,
         # x03=x03,
         # x04=x04,
         # x05=x05,
-
-
-
         # protected=protected, # use me pls
         # salt=salt, # use me pls
     )
@@ -232,6 +225,7 @@ def main():
         for subject in tqdm(subjects):
 
             category_req_dict = {"category": subjects[subject]}
+            
             payload = set_payload_map_dynamic(payload, period, subject)
             # get json with all requests from this period and subject
             list_of_raw_requests = get_raw_requests(url, headers, payload)
@@ -270,8 +264,10 @@ def main():
                 # protected=protected, # use me pls
                 # salt=salt, # use me pls
             )
-            url = "https://115.xn--90ais/portal/wwv_flow.ajax" # use me pls
-            headers = Parser.get_headers_map(cookie=cookie, referer=referer) # use me pls
+            url = "https://115.xn--90ais/portal/wwv_flow.ajax"  # use me pls
+            headers = Parser.get_headers_map(
+                cookie=cookie, referer=referer
+            )  # use me pls
             period_temp_list.extend(list_of_requests)
 
         with open(path / f"{period}.json", "w", encoding="utf8") as f:
