@@ -1,0 +1,6 @@
+districts/
+reference/
+.ipynb_checkpoints/
+__pycache__/
+regions/
+docker_env/
