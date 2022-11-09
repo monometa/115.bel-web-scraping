@@ -1,6 +1,16 @@
-from payload_params import *
+from session_params import *
+
 
 class Parser:
+    def __init__(self) -> None:
+        self._cookie = cookie
+        self._referer = referer
+
+    def cookie(self):
+        return self._cookie
+
+    def referer(self):
+        return self._referer
 
     def get_headers_map(cookie, referer):
 
@@ -24,14 +34,29 @@ class Parser:
             "sec-ch-ua-platform": "Linux",
         }
 
+        return headers
+
     def get_payload_map_static(
         p_instance=p_instance,
         p_request=p_request,
-        some_payload_params=p_request,
-        # protected=protected, salt=salt - do not used!
-        ) -> dict:
-        
+        x02=x02,
+        x03=x03,
+        x04=x04,
+        x05=x05,
+    ) -> dict:
 
+        payload_json_params = {
+        "pageItems": {
+            "itemsToSubmit": [
+                {"n": "P19_PERIOD", "v": ""},
+                {"n": "P19_SUBJECT", "v": ""},
+            ],
+            "protected": protected,
+            "rowVersion": "",
+        },
+        # salt changeable / required (90%)
+        "salt": salt,
+        }
 
         data = {
             "p_flow_id": "10901",
@@ -42,10 +67,10 @@ class Parser:
             # p_request - changeable / required (90%)
             "p_request": p_request,
             "x01": "3857",
-            "x02": some_payload_params['x02'],
-            "x03": some_payload_params['x02'],
-            "x04": some_payload_params['x02'],
-            "x05": some_payload_params['x02'],
+            "x02": x02,
+            "x03": x03,
+            "x04": x04,
+            "x05": x05,
             "x06": "N",
             "x07": "11",
             "x10": "FOIDATA",
