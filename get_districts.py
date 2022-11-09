@@ -79,7 +79,7 @@ def get_regions_txt_f(province='', district=''):
 
         with open(filename, "w+", encoding="utf8") as f:
             json.dump(text_d, f, ensure_ascii=False)
-    
+
     return filename
 
 def transform_txt_f_2_html(filename):
@@ -94,7 +94,7 @@ def transform_txt_f_2_html(filename):
 
     with open (html_filename, 'w') as f:
         f.writelines(flow_string)
-    
+
     return html_filename
 
 def extract_regions_from_html_save_2_csv(html_filename):
@@ -107,8 +107,8 @@ def extract_regions_from_html_save_2_csv(html_filename):
 
         for option in soup.find_all('option'):
             data_piece[option['value']] = option.text
-    
-    with open(f'{html_filename[:-4]}csv', 'w') as csv_file:  
+
+    with open(f'{html_filename[:-4]}csv', 'w') as csv_file:
         writer = csv.writer(csv_file)
         for key, value in data_piece.items():
             writer.writerow([key, value])
