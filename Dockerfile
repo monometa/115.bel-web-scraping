@@ -20,4 +20,4 @@ COPY requirements.txt .
 RUN chmod -R 777 /opt/airflow/*
 USER $AIRFLOW_UID
 # RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
