@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, date, time
 from tqdm import tqdm
 import requests
-from parser_config import *
+from parser.parser_config import *
 from parser import Parser
 
 requests.packages.urllib3.disable_warnings()

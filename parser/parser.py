@@ -1,4 +1,4 @@
-from session_params import *
+from parser.session_params import *
 
 
 class Parser:
