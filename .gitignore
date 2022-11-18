@@ -1,6 +1,9 @@
-districts/
-reference/
 .ipynb_checkpoints/
+.env
 __pycache__/
-regions/
-docker_env/
+airflow/dags/__pycache__/
+airflow/logs/
+
+spark/resources
+
+temp/
