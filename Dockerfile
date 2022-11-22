@@ -1,6 +1,8 @@
 
 FROM apache/airflow:2.4.3
 
+# ////////////////////////////////////////////////////////////////////////////////////////////////////////////// FIRST VERSION 
+
 # ARG SPARK_VERSION="3.1.2"
 # ARG HADOOP_VERSION="3.2"
 
@@ -80,4 +82,3 @@ RUN curl -O https://archive.apache.org/dist/spark/spark-3.0.1/spark-3.0.1-bin-ha
 USER $AIRFLOW_UID
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-# COPY resources/spark_config $HADOOP_CONF_DIR
