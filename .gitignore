@@ -8,3 +8,5 @@ spark/resources
 airflow/resources
 
 temp/
+parser/data_2019/
+parser/data_with_geo/
