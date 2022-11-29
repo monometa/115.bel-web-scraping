@@ -53,9 +53,19 @@ FROM apache/airflow:2.4.3
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+# TO-DO: create dir "bin" as a file to load another modules
+
 # Install Python requirements
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-e", "-u", "-x", "-c"]
+
+RUN apt update && \
+    apt-get install wget unzip zip -y
+
+# AWS CLI installation:
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip -o awscliv2.zip 
+RUN sudo ./aws/install --update 
 
 # Install Java
 RUN apt update && \
